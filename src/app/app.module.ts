@@ -10,16 +10,31 @@ import { PlaygroundComponent } from './playground/playground.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { DragDropModule } from '@angular/cdk/drag-drop';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+
 import { TextComponent } from './windows/text/text.component';
+import { TableComponent } from './windows/table/table.component';
+import { WorkbookComponent } from './windows/workbook/workbook.component';
 
 @NgModule({
-  declarations: [AppComponent, TreeComponent, CutPipe, PlaygroundComponent, TextComponent],
+  declarations: [
+    AppComponent,
+    TreeComponent,
+    CutPipe,
+    PlaygroundComponent,
+    TextComponent,
+    TableComponent,
+    WorkbookComponent,
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     BrowserAnimationsModule,
     DragDropModule,
+    MatTooltipModule,
+    MatSnackBarModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

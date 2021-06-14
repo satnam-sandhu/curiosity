@@ -1,0 +1,32 @@
+<ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+  <li class="nav-item" role="presentation" *ngFor="let sheet of config.data">
+    <button
+      [ngClass]="
+        activeSheet.name == sheet.name ? 'nav-link active' : 'nav-link'
+      "
+      id="pills-home-tab"
+      [attr.data-bs-toggle]="'pill'"
+      [attr.data-bs-target]="'#' + sheet.name.replace(' ', '-')"
+      type="button"
+      role="tab"
+      aria-controls="pills-home"
+      aria-selected="true"
+      (click)="makeActive(sheet)"
+    >
+      {{ sheet.name }}
+    </button>
+  </li>
+</ul>
+<div class="tab-content" id="pills-tabContent">
+  <div
+    *ngFor="let sheet of config.data"
+    class="tab-pane fade show active"
+    role="tabpanel"
+    aria-labelledby="pills-home-tab"
+  >
+    <app-table
+      *ngIf="activeSheet.name == sheet.name"
+      [config]="sheet"
+    ></app-table>
+  </div>
+</div>

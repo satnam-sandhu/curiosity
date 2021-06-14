@@ -1,6 +1,6 @@
 <ul class="list-unstyled ps-0">
   <li class="mb-1" *ngFor="let item of tree">
-    <span class="hoverable">
+    <span class="hoverable" matTooltip="{{ item.name }}">
       <i
         (click)="
           item.isDir ? (item.isOpen = !item.isOpen) : '';

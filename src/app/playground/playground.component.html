@@ -1,14 +1,34 @@
 <div id="playground">
-  <div class="card" *ngFor="let item of openWindows" cdkDrag>
+  <div
+    (drag)="makeActive(i)"
+    (click)="makeActive(i)"
+    (mousedown)="makeActive(i)"
+    class="card"
+    style="position: absolute"
+    [style.z-index]="activeWindow == i ? 10 : ''"
+    *ngFor="let item of openWindows; let i = index"
+    cdkDrag
+  >
     <div class="drag-handle card-header" cdkDragHandle>
       <i class="bi bi-file-earmark"></i> &nbsp;
-      <b>{{ item.name }}</b>
+      <b>{{ item.name }}</b> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <div class="boxclose" (click)="closeWindow(i)" id="boxclose">
+        <b>x</b>
+      </div>
     </div>
     <div class="card-body">
       <app-text
         *ngIf="item.config.type == 'txt'"
         [config]="item.config"
       ></app-text>
+      <app-table
+        *ngIf="tableFormats.includes(item.config.type)"
+        [config]="item.config"
+      ></app-table>
+      <app-workbook
+        *ngIf="workbookFormats.includes(item.config.type)"
+        [config]="item.config"
+      ></app-workbook>
     </div>
   </div>
 </div>
