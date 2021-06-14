@@ -16,6 +16,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { TextComponent } from './windows/text/text.component';
 import { TableComponent } from './windows/table/table.component';
 import { WorkbookComponent } from './windows/workbook/workbook.component';
+import { SlicePipe } from './pipes/slice/slice.pipe';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import { WorkbookComponent } from './windows/workbook/workbook.component';
     TextComponent,
     TableComponent,
     WorkbookComponent,
+    SlicePipe,
   ],
   imports: [
     BrowserModule,

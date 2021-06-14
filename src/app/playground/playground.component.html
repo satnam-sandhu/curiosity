@@ -24,10 +24,12 @@
       <app-table
         *ngIf="tableFormats.includes(item.config.type)"
         [config]="item.config"
+        [endAt]="item.endAt"
       ></app-table>
       <app-workbook
         *ngIf="workbookFormats.includes(item.config.type)"
         [config]="item.config"
+        [endAt]="item.endAt"
       ></app-workbook>
     </div>
   </div>

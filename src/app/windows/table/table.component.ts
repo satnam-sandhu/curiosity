@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { config } from 'rxjs';
+import { CoreService } from 'src/app/services/core/core.service';
 
 @Component({
   selector: 'app-table',
@@ -7,17 +7,18 @@ import { config } from 'rxjs';
   styleUrls: ['./table.component.css'],
 })
 export class TableComponent implements OnInit {
-  @Input() config: any = config;
+  @Input() config: any;
+  @Input() endAt: number = 10;
 
+  meta: any = {};
   headers: any = [];
 
-  constructor() {}
+  constructor(private core: CoreService) {}
 
-  refreshHeaders() {
+  async ngOnInit() {
     this.headers = Object.keys(this.config.data[0]);
-  }
-
-  ngOnInit() {
-    this.refreshHeaders();
+    let { meta } = await this.core.analyze(this.config.data);
+    console.log('done', meta);
+    this.meta = meta;
   }
 }

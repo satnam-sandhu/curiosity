@@ -1,11 +1,14 @@
 <ul class="list-unstyled ps-0">
   <li class="mb-1" *ngFor="let item of tree">
-    <span class="hoverable" matTooltip="{{ item.name }}">
+    <span
+      class="hoverable"
+      matTooltip="{{ item.name }}"
+      (click)="
+        item.isDir ? (item.isOpen = !item.isOpen) : '';
+        item.isDir ? loadDir(item) : loadFile(item)
+      "
+    >
       <i
-        (click)="
-          item.isDir ? (item.isOpen = !item.isOpen) : '';
-          item.isDir ? loadDir(item) : loadFile(item)
-        "
         [ngClass]="
           item.isDir
             ? item.isOpen
