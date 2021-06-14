@@ -17,6 +17,7 @@ import { TextComponent } from './windows/text/text.component';
 import { TableComponent } from './windows/table/table.component';
 import { WorkbookComponent } from './windows/workbook/workbook.component';
 import { SlicePipe } from './pipes/slice/slice.pipe';
+import { DatePipe } from './pipes/date/date.pipe';
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import { SlicePipe } from './pipes/slice/slice.pipe';
     TableComponent,
     WorkbookComponent,
     SlicePipe,
+    DatePipe,
   ],
   imports: [
     BrowserModule,

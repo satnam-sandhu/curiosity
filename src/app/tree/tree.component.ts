@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { HttpService } from '../services/http/http.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { StateService } from '../services/state/state.service';
 
 @Component({
   selector: 'app-tree',
@@ -12,7 +13,11 @@ export class TreeComponent implements OnInit {
   @Input() root: any;
   @Input() openWindows: any;
 
-  constructor(private http: HttpService, private _snackBar: MatSnackBar) {}
+  constructor(
+    private http: HttpService,
+    private _snackBar: MatSnackBar,
+    private state: StateService
+  ) {}
 
   ngOnInit(): void {}
 
@@ -26,6 +31,7 @@ export class TreeComponent implements OnInit {
         item.config = res;
         item.isLoaded = true;
         this.openWindows.push(item);
+        this.state.activeWindow = this.openWindows.length - 1;
       });
   }
 

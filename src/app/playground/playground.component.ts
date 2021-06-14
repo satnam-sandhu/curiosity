@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { StateService } from '../services/state/state.service';
 
 @Component({
   selector: 'app-playground',
@@ -6,18 +7,17 @@ import { Component, Input, OnInit } from '@angular/core';
   styleUrls: ['./playground.component.css'],
 })
 export class PlaygroundComponent implements OnInit {
-  activeWindow: any = '';
   tableFormats = ['csv', 'tsv'];
   workbookFormats = ['xlsx', 'xls'];
 
   @Input() openWindows: any = [];
 
-  constructor() {}
+  constructor(public state: StateService) {}
 
   ngOnInit(): void {}
 
   makeActive(i: any) {
-    this.activeWindow = i;
+    this.state.activeWindow = i;
   }
 
   closeWindow(i: any) {

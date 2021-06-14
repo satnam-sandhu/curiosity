@@ -5,13 +5,19 @@
     (mousedown)="makeActive(i)"
     class="card"
     style="position: absolute"
-    [style.z-index]="activeWindow == i ? 10 : ''"
+    [style.z-index]="state.activeWindow == i ? 10 : ''"
     *ngFor="let item of openWindows; let i = index"
     cdkDrag
   >
     <div class="drag-handle card-header" cdkDragHandle>
       <i class="bi bi-file-earmark"></i> &nbsp;
-      <b>{{ item.name }}</b> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <b>{{ item.name }}</b>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <span *ngIf="item.config.type == 'csv'" class="terminal"
+        >rows: {{ item.config.data.length }}</span
+      >&nbsp;&nbsp;
+      <span class="terminal">timezone: UTC (+ 0:00)</span>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
       <div class="boxclose" (click)="closeWindow(i)" id="boxclose">
         <b>x</b>
       </div>
