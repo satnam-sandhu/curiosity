@@ -1,3 +1,5 @@
 .tree {
   overflow: auto;
+  background-color: hsl(192deg 100% 14%);
+  color: white;
 }

@@ -8,6 +8,7 @@ import { HttpService } from './services/http/http.service';
 })
 export class AppComponent implements OnInit {
   tree: any;
+  openWindows: any = [];
 
   constructor(private http: HttpService) {}
 

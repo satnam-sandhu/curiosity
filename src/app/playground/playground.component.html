@@ -1,0 +1,14 @@
+<div id="playground">
+  <div class="card" *ngFor="let item of openWindows" cdkDrag>
+    <div class="drag-handle card-header" cdkDragHandle>
+      <i class="bi bi-file-earmark"></i> &nbsp;
+      <b>{{ item.name }}</b>
+    </div>
+    <div class="card-body">
+      <app-text
+        *ngIf="item.config.type == 'txt'"
+        [config]="item.config"
+      ></app-text>
+    </div>
+  </div>
+</div>

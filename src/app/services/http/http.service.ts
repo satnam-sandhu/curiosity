@@ -12,4 +12,7 @@ export class HttpService {
   getTreeData(path?: string) {
     return this.http.get(`${this.url.base}/tree?path=/${path || ''}`);
   }
+  getFile(path: string) {
+    return this.http.get(`${this.url.base}/file?path=/${path || ''}`);
+  }
 }

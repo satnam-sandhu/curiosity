@@ -2,15 +2,27 @@
   <li class="mb-1" *ngFor="let item of tree">
     <span class="hoverable">
       <i
-        *ngIf="item.isDir"
-        (click)="item.isOpen = !item.isOpen; load(item)"
-        [ngClass]="item.isOpen ? 'bi bi-folder2-open' : 'bi bi-folder2'"
+        (click)="
+          item.isDir ? (item.isOpen = !item.isOpen) : '';
+          item.isDir ? loadDir(item) : loadFile(item)
+        "
+        [ngClass]="
+          item.isDir
+            ? item.isOpen
+              ? 'bi bi-folder2-open'
+              : 'bi bi-folder2'
+            : 'bi bi-file-earmark'
+        "
       ></i>
-      <i *ngIf="!item.isDir" class="bi bi-file-earmark"></i>
+
       {{ item.name | cut }}
     </span>
-    <div *ngIf="item.isOpen" class="flex-shrink-0 p-2 bg-white">
-      <app-tree [root]="item.name" [tree]="item.child || []"></app-tree>
+    <div *ngIf="item.isOpen" class="flex-shrink-0 p-2">
+      <app-tree
+        [root]="item.name"
+        [tree]="item.child || []"
+        [openWindows]="openWindows"
+      ></app-tree>
     </div>
   </li>
 </ul>

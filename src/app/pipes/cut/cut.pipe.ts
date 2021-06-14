@@ -5,6 +5,6 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class CutPipe implements PipeTransform {
   transform(value: string, ...args: unknown[]): unknown {
-    return value.length <= 15 ? value : value.substr(0, 15) + '...';
+    return value.length <= 10 ? value : value.substr(0, 10) + '...';
   }
 }
