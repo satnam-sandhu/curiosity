@@ -15,3 +15,7 @@ body {
 .drag-handle:hover {
   cursor: move;
 }
+
+.hidden {
+  display: none;
+}

@@ -22,6 +22,10 @@ export class PlaygroundComponent implements OnInit {
 
   closeWindow(i: any) {
     this.openWindows.splice(i, 1);
-    console.log(this.openWindows);
+  }
+
+  setIndexAndGetName(item: any, i: number) {
+    item.i = i;
+    return item.name;
   }
 }

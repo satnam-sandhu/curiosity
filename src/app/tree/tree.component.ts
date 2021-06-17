@@ -22,7 +22,9 @@ export class TreeComponent implements OnInit {
   ngOnInit(): void {}
 
   loadFile(item: any): any {
-    if (item.isLoaded) return this.openWindows.push(item);
+    console.log(item);
+    if (item.isLoaded && !item.open) return this.openWindows.push(item);
+    if (item.isLoaded && item.open) return (this.state.activeWindow = item.i);
     this.http
       .getFile(`${this.root}/${item.name}`)
       .subscribe((res: any): any => {
@@ -31,6 +33,7 @@ export class TreeComponent implements OnInit {
         item.config = res;
         item.isLoaded = true;
         this.openWindows.push(item);
+        item.open = true;
         this.state.activeWindow = this.openWindows.length - 1;
       });
   }

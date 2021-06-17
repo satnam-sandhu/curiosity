@@ -11,14 +11,19 @@
   >
     <div class="drag-handle card-header" cdkDragHandle>
       <i class="bi bi-file-earmark"></i> &nbsp;
-      <b>{{ item.name }}</b>
+      <b>{{ setIndexAndGetName(item, i) }}</b>
       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
       <span *ngIf="item.config.type == 'csv'" class="terminal"
         >rows: {{ item.config.data.length }}</span
       >&nbsp;&nbsp;
       <span class="terminal">timezone: UTC (+ 0:00)</span>
       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-      <div class="boxclose" (click)="closeWindow(i)" id="boxclose">
+      <i class="bi bi-pie-chart-fill"></i>
+      <div
+        class="boxclose"
+        (click)="item.open = false; closeWindow(i)"
+        id="boxclose"
+      >
         <b>x</b>
       </div>
     </div>
@@ -31,11 +36,13 @@
         *ngIf="tableFormats.includes(item.config.type)"
         [config]="item.config"
         [endAt]="item.endAt"
+        [openWindows]="openWindows"
       ></app-table>
       <app-workbook
         *ngIf="workbookFormats.includes(item.config.type)"
         [config]="item.config"
         [endAt]="item.endAt"
+        [openWindows]="openWindows"
       ></app-workbook>
     </div>
   </div>

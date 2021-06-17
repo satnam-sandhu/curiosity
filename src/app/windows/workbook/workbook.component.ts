@@ -8,6 +8,7 @@ import { Component, Input, OnInit, ViewChild } from '@angular/core';
 export class WorkbookComponent implements OnInit {
   @Input() config: any;
   @Input() endAt: number = 10;
+  @Input() openWindows: any;
 
   activeSheet: any = {};
   constructor() {}

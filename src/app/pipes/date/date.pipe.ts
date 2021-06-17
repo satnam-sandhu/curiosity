@@ -12,7 +12,7 @@ export class DatePipe implements PipeTransform {
       let hour = value.getUTCHours();
       let min = value.getUTCMinutes();
       return `${month}-${date}-${year} ${hour}:${min}`;
-    } catch {
+    } catch (err) {
       return value;
     }
   }
