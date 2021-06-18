@@ -22,7 +22,6 @@ export class TreeComponent implements OnInit {
   ngOnInit(): void {}
 
   loadFile(item: any): any {
-    console.log(item);
     if (item.isLoaded && !item.open) return this.openWindows.push(item);
     if (item.isLoaded && item.open) return (this.state.activeWindow = item.i);
     this.http

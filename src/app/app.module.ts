@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
 import { TreeComponent } from './tree/tree.component';
@@ -18,6 +19,7 @@ import { TableComponent } from './windows/table/table.component';
 import { WorkbookComponent } from './windows/workbook/workbook.component';
 import { SlicePipe } from './pipes/slice/slice.pipe';
 import { DatePipe } from './pipes/date/date.pipe';
+import { SettingsComponent } from './windows/settings/settings.component';
 
 @NgModule({
   declarations: [
@@ -30,8 +32,10 @@ import { DatePipe } from './pipes/date/date.pipe';
     WorkbookComponent,
     SlicePipe,
     DatePipe,
+    SettingsComponent,
   ],
   imports: [
+    FormsModule,
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,

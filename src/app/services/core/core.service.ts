@@ -61,4 +61,50 @@ export class CoreService {
       setTimeout(analyze.bind(this, 0));
     });
   }
+
+  performActions(config: any, actions: any): Promise<any> {
+    console.log(config);
+    return new Promise((resolve) => {
+      let arr: any = [];
+      let transform = function (i: any) {
+        if (i == 1) console.log(config.headers);
+
+        try {
+          if (i % 100 == 0) console.log(i);
+          let ob: any = {};
+          for (let index = 0; index < config.headers.length; index++) {
+            ob[config.headers[index]] = config.data[i][config.headers[index]];
+            if (index == config.action.index) {
+              for (let action of actions) {
+                try {
+                  switch (action.type) {
+                    case 'substr':
+                      ob[config.action.name] = config.data[i][
+                        config.headers[index]
+                      ].substr(...action.params);
+                      break;
+                  }
+                } catch (err) {
+                  console.log(err, i);
+                }
+              }
+            }
+          }
+          arr.push(ob);
+          if (i < config.data.length - 1)
+            setTimeout(function () {
+              transform(++i);
+            });
+          else {
+            config.headers.splice(config.action.index, 0, config.action.name);
+            return resolve({ data: arr, headers: config.headers });
+          }
+        } catch (err) {
+          console.log(err, config, i);
+        }
+      };
+
+      setTimeout(transform.bind(this, 0));
+    });
+  }
 }

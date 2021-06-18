@@ -5,7 +5,7 @@
       <th *ngFor="let head of config.headers; let i = index">
         {{ head }}
         <i
-          (click)="openSettings({ action: 'addColumn', index: i })"
+          (click)="openSettings({ type: 'addColumn', index: i })"
           class="bi bi-plus float-end"
         ></i>
       </th>
@@ -16,16 +16,17 @@
       <th>0</th>
       <td *ngFor="let head of config.headers">
         <div
-          *ngIf="!meta[head]?.types?.type"
+          *ngIf="!meta[head]?.types?.type || !config.isAnalyzed"
           class="spinner-border text-success"
           role="status"
         >
           <span class="sr-only"></span>
         </div>
-        <span *ngFor="let type of meta[head]?.types?.type"
+        <span *ngFor="let type of meta[head]?.types?.type; let last = last"
           >{{ type }}
           <span *ngIf="meta[head]?.types?.type.length > 1"
-            >({{ meta[head]?.types?.counter[type] }})</span
+            >({{ meta[head]?.types?.counter[type] }})
+            <span *ngIf="!last">,</span>&nbsp;&nbsp;</span
           ></span
         >
       </td>

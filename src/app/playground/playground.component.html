@@ -44,6 +44,11 @@
         [endAt]="item.endAt"
         [openWindows]="openWindows"
       ></app-workbook>
+      <app-settings
+        *ngIf="item.config.type == 'settings'"
+        [config]="item.config"
+        [openWindows]="openWindows"
+      ></app-settings>
     </div>
   </div>
 </div>

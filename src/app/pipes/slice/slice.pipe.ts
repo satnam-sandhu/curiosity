@@ -5,6 +5,10 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class SlicePipe implements PipeTransform {
   transform(value: any, ...args: any[]): any {
-    return value.slice(args[0], args[1]);
+    try {
+      return value.slice(args[0], args[1]);
+    } catch {
+      return value;
+    }
   }
 }

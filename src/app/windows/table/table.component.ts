@@ -19,17 +19,20 @@ export class TableComponent implements OnInit {
 
   async ngOnInit() {
     this.type = this.config.type;
+    this.config._type = this.config.type;
+
     this.config.headers = Object.keys(this.config.data[0]);
     this.headers.splice(this.headers.indexOf('_utc_date'), 1);
     if (this.config.meta) return (this.meta = this.config.meta);
     let { meta } = await this.core.analyze(this.config.data);
+    this.config.isAnalyzed = true;
     this.config.meta = meta;
     console.log('done', meta);
     this.meta = meta;
   }
 
-  openSettings(meta: any) {
-    // this.config.type = 'settings';
-    // console.log(this.config);
+  openSettings(action: any) {
+    this.config.type = 'settings';
+    this.config.action = action;
   }
 }
