@@ -59,24 +59,26 @@
         </option>
       </select>
     </div>
-    <ng-container *ngFor="let _action of actions">
-      <ng-container *ngIf="_action.type == 'substr'">
-        <ng-container
-          *ngFor="let param_header of action?.param_headers; let i = index"
-        >
-          <div class="form-group mx-sm-3 mb-2">
-            <label class="sr-only">{{ param_header }}</label>
-            <input
-              [(ngModel)]="action.params[i]"
-              class="form-control"
-              placeholder="e.g. 9"
-            />
-          </div>
-        </ng-container>
-      </ng-container>
+
+    <ng-container
+      *ngFor="let param_header of action?.param_headers; let i = index"
+    >
+      <div class="form-group mx-sm-3 mb-2">
+        <label class="sr-only">{{ param_header }}</label>
+        <input
+          [(ngModel)]="action.params[i]"
+          class="form-control"
+          placeholder="e.g. 9"
+        />
+      </div>
     </ng-container>
   </div>
-  <button class="btn btn-sm btn-danger" (click)="goBack()">Back</button>
+  <hr />
+  <h2>Sample Output</h2>
+  <span>{{ sample_value }}</span>
+  <hr />
+  <button class="btn btn-sm btn-danger" (click)="goBack()">Back</button
+  >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
   <button class="btn btn-sm btn-success float-end" (click)="add()">
     Add Action
   </button>

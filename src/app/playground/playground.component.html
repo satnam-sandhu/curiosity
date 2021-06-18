@@ -10,7 +10,7 @@
     cdkDrag
   >
     <div class="drag-handle card-header" cdkDragHandle>
-      <i class="bi bi-file-earmark"></i> &nbsp;
+      <i class="bi bi-file-earmark hoverable"></i> &nbsp;
       <b>{{ setIndexAndGetName(item, i) }}</b>
       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
       <span *ngIf="item.config.type == 'csv'" class="terminal"
@@ -19,6 +19,13 @@
       <span class="terminal">timezone: UTC (+ 0:00)</span>
       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
       <i class="bi bi-pie-chart-fill"></i>
+
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+      <span (click)="save(item)">
+        <i class="bi bi-save hoverable"></i>
+      </span>
+
       <div
         class="boxclose"
         (click)="item.open = false; closeWindow(i)"

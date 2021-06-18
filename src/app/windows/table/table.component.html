@@ -4,10 +4,12 @@
       <th>#</th>
       <th *ngFor="let head of config.headers; let i = index">
         {{ head }}
-        <i
-          (click)="openSettings({ type: 'addColumn', index: i })"
-          class="bi bi-plus float-end"
-        ></i>
+        <span>
+          <i
+            (click)="openSettings({ type: 'addColumn', index: i })"
+            class="bi bi-plus float-end"
+          ></i>
+        </span>
       </th>
     </tr>
   </thead>
@@ -34,7 +36,7 @@
   </thead>
   <tbody>
     <tr *ngFor="let item of config.data | slice: 0:10; let i = index">
-      <th>{{ i + 1 }}</th>
+      <th class="hoverable" (click)="deleteRow(i)">{{ i + 1 }}</th>
       <td *ngFor="let head of config.headers">{{ item[head] | date }}</td>
     </tr>
   </tbody>

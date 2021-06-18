@@ -44,4 +44,8 @@ export class TreeComponent implements OnInit {
       item.child = res;
     });
   }
+
+  deleteFile(item: any) {
+    this.http.getTreeData(`${this.root}/${item.name}`).subscribe((res) => {});
+  }
 }

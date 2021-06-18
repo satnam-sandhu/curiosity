@@ -22,9 +22,14 @@
 
       {{ item.name | cut }}
     </span>
+    <i
+      *ngIf="!item.isDir"
+      class="bi bi-trash float-end hoverable"
+      (click)="deleteFile(item)"
+    ></i>
     <div *ngIf="item.isOpen" class="flex-shrink-0 p-2">
       <app-tree
-        [root]="item.name"
+        [root]="this.root + '/' + item.name"
         [tree]="item.child || []"
         [openWindows]="openWindows"
       ></app-tree>

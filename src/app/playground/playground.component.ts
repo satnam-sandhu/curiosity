@@ -28,4 +28,8 @@ export class PlaygroundComponent implements OnInit {
     item.i = i;
     return item.name;
   }
+
+  save(item: any) {
+    console.log(item.config.data, item.path);
+  }
 }

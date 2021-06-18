@@ -62,8 +62,8 @@ export class CoreService {
     });
   }
 
-  performActions(config: any, actions: any): Promise<any> {
-    console.log(config);
+  performActions(config: any, actions: any, opts?: any): Promise<any> {
+    if (!opts) opts = {};
     return new Promise((resolve) => {
       let arr: any = [];
       let transform = function (i: any) {
@@ -75,28 +75,34 @@ export class CoreService {
           for (let index = 0; index < config.headers.length; index++) {
             ob[config.headers[index]] = config.data[i][config.headers[index]];
             if (index == config.action.index) {
+              let value = config.data[i][config.headers[index]];
               for (let action of actions) {
                 try {
+                  // console.log(action.type);
                   switch (action.type) {
                     case 'substr':
-                      ob[config.action.name] = config.data[i][
-                        config.headers[index]
-                      ].substr(...action.params);
+                      value = value.substr(...action.params);
+                      break;
+                    case 'constant':
+                      // console.log(i, config.data);
+                      value = value + action.params.join('');
                       break;
                   }
                 } catch (err) {
                   console.log(err, i);
                 }
               }
+              ob[config.action.name] = value;
             }
           }
           arr.push(ob);
-          if (i < config.data.length - 1)
+          if (i < config.data.length - 1 && !opts.sample)
             setTimeout(function () {
               transform(++i);
             });
           else {
-            config.headers.splice(config.action.index, 0, config.action.name);
+            if (!opts.sample)
+              config.headers.splice(config.action.index, 0, config.action.name);
             return resolve({ data: arr, headers: config.headers });
           }
         } catch (err) {

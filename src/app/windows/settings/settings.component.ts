@@ -10,12 +10,19 @@ export class SettingsComponent implements OnInit {
   @Input() config: any;
   @Input() openWindows: any = [];
 
-  action: any = null;
+  sample_value: any;
+  action: any = {};
   actions: any = [
     {
       type: 'substr',
       name: 'Sub String',
-      param_headers: ['start', 'end'],
+      param_headers: ['Starting Index', 'Ending Index'],
+      params: [],
+    },
+    {
+      type: 'constant',
+      name: 'Constant Value',
+      param_headers: ['Constant Value'],
       params: [],
     },
   ];
@@ -25,16 +32,24 @@ export class SettingsComponent implements OnInit {
   constructor(private core: CoreService) {}
 
   async ngOnInit() {
-    console.log(this.config);
+    this.sample_value =
+      this.config.data[0][this.config.headers[this.config.action.index]];
   }
 
   setCurrentAction(action: any) {
     console.log(action);
   }
 
-  add() {
+  async add() {
     this.pending_actions.push(Object.assign({}, this.action));
     console.log(this.pending_actions);
+    let { data } = await this.core.performActions(
+      this.config,
+      this.pending_actions,
+      { sample: true }
+    );
+    console.log(data, this.config.action);
+    this.sample_value = data[0][this.config.action.name];
   }
 
   goBack() {

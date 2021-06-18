@@ -32,7 +32,12 @@ export class TableComponent implements OnInit {
   }
 
   openSettings(action: any) {
+    console.log(action);
     this.config.type = 'settings';
     this.config.action = action;
+  }
+
+  deleteRow(i: any) {
+    this.config.data.splice(i, 1);
   }
 }
