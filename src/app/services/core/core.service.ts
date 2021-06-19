@@ -62,6 +62,44 @@ export class CoreService {
     });
   }
 
+  addColumn(config: any, opts?: any): Promise<any> {
+    console.log(opts);
+    return new Promise((resolve) => {
+      let { columns } = opts;
+      let arr: any = [];
+      let transform = function (i: any) {
+        try {
+          if (i % 100 == 0) console.log(i);
+          let ob: any = {};
+          for (let index = 0; index < config.headers.length; index++) {
+            ob[config.headers[index]] = config.data[i][config.headers[index]];
+            if (index == config.action.index) {
+              let value = '';
+              for (let col of columns) {
+                value = value + config.data[i][col];
+              }
+              ob[opts.name] = value;
+            }
+          }
+          arr.push(ob);
+          if (i < config.data.length - 1 && !opts.sample)
+            setTimeout(function () {
+              transform(++i);
+            });
+          else {
+            if (!opts.sample)
+              config.headers.splice(config.action.index, 0, config.action.name);
+            return resolve({ data: arr, headers: config.headers });
+          }
+        } catch (err) {
+          console.log(err, config, i);
+        }
+      };
+
+      setTimeout(transform.bind(this, 0));
+    });
+  }
+
   performActions(config: any, actions: any, opts?: any): Promise<any> {
     if (!opts) opts = {};
     return new Promise((resolve) => {
@@ -124,20 +162,22 @@ export class CoreService {
       let _processed_data: any = {};
       let processed_data: any = [];
       let analyze = function (i: number) {
-        if (i % 100 == 0) console.log(i);
-
         let row = data[i];
+        if (i % 100 == 0) {
+          console.log(i);
+        }
+
         if (!_processed_data[row[meta.column]]) {
           processed_data.push(0);
-          _processed_data[row[meta.column]] = processed_data.length - 1;
+          _processed_data[row[meta.column]] = processed_data.length;
         }
         switch (meta._function) {
           case 'count':
-            processed_data[_processed_data[row[meta.column]]]++;
+            processed_data[_processed_data[row[meta.column]] - 1]++;
             break;
           case 'sum':
-            processed_data[_processed_data[row[meta.column]]] =
-              processed_data[_processed_data[row[meta.column]]] +
+            processed_data[_processed_data[row[meta.column]] - 1] =
+              processed_data[_processed_data[row[meta.column]] - 1] +
               Number(row[row[meta.column]]);
             break;
         }
@@ -149,6 +189,40 @@ export class CoreService {
           });
       };
       setTimeout(() => analyze(0));
+    });
+  }
+
+  delete(config: any, opts?: any): Promise<any> {
+    if (!opts) opts = {};
+    return new Promise((resolve) => {
+      let arr: any = [];
+      let transform = function (i: any) {
+        if (i >= config.data.length - 1)
+          return resolve({ data: arr, headers: config.headers });
+
+        try {
+          if (i % 100 == 0) {
+            console.log(i);
+          }
+          if (opts.values.includes(config.data[i][opts.column]))
+            return setTimeout(function () {
+              transform(++i);
+            });
+          let ob = Object.assign({}, config.data[i]);
+          arr.push(ob);
+          if (i < config.data.length - 1)
+            setTimeout(function () {
+              transform(++i);
+            });
+          else {
+            return resolve({ data: arr, headers: config.headers });
+          }
+        } catch (err) {
+          console.log(err, config, i);
+        }
+      };
+
+      setTimeout(transform.bind(this, 0));
     });
   }
 }

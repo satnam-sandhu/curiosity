@@ -61,7 +61,7 @@
       class="form-control"
       id="exampleFormControlSelect1"
     >
-      <option [ngValue]="null" disabled>Select an Action</option>
+      <option [ngValue]="undefined" disabled>Select an Action</option>
       <option
         [disabled]="_action.disabled"
         [ngValue]="_action"
@@ -93,40 +93,29 @@
   </button>
   <button class="btn btn-sm btn-primary" (click)="apply()">Apply</button>
 </ng-container>
-
+<br />
 <table *ngIf="done" class="table">
   <tbody>
     <tr>
-      <td></td>
-
       <td>
-        <input
-          type="text"
-          [(ngModel)]="mergeTo"
-          class="form-control"
-          placeholder="Type the string you want your selections to be merged into"
-        />
+        <i
+          class="bi bi-trash hoverable"
+          style="color: red"
+          (click)="delete()"
+        ></i>
       </td>
-      <td></td>
-      <td>
-        <button (click)="merge()" class="btn">Merge</button>
-      </td>
-      <td></td>
     </tr>
     <tr *ngFor="let label of labels; let i = index">
       <td>
         <input
           type="checkbox"
-          [(ngModel)]="selections[i]"
+          [(ngModel)]="selections[label]"
           class="form-check-input"
         />
       </td>
       <td>{{ label }}</td>
       <td>{{ data[i] }}</td>
       <td></td>
-      <td>
-        <i style="color: red" class="bi bi-trash hoverable"></i>
-      </td>
     </tr>
   </tbody>
 </table>

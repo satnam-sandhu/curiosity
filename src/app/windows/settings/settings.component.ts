@@ -10,6 +10,8 @@ export class SettingsComponent implements OnInit {
   @Input() config: any;
   @Input() openWindows: any = [];
 
+  selections: any = {};
+
   sample_value: any;
   action: any = {};
   actions: any = [
@@ -46,26 +48,17 @@ export class SettingsComponent implements OnInit {
     console.log(action);
   }
 
-  async add() {
-    this.pending_actions.push(Object.assign({}, this.action));
-    console.log(this.pending_actions);
-    let { data } = await this.core.performActions(
-      this.config,
-      this.pending_actions,
-      { sample: true }
-    );
-    this.sample_value = data[0][this.config.action.name];
-  }
-
   goBack() {
     this.config.type = this.config._type;
   }
 
   async apply() {
-    let { data, headers } = await this.core.performActions(
-      this.config,
-      this.pending_actions
-    );
+    let { data, headers } = await this.core.addColumn(this.config, {
+      columns: Object.keys(this.selections).filter(
+        (head) => this.selections[head]
+      ),
+      name: this.config.action.name,
+    });
     console.log(this.config);
     this.config.data = data;
     this.config.headers = headers;

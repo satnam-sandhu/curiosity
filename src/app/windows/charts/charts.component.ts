@@ -112,4 +112,17 @@ export class ChartsComponent implements OnInit {
     this.config.headers = headers;
     this.goBack();
   }
+
+  async delete() {
+    let { data, headers } = await this.core.delete(this.config, {
+      values: Object.keys(this.selections).filter(
+        (head) => this.selections[head]
+      ),
+      column: this.column,
+    });
+    console.log(this.config);
+    this.config.data = data;
+    this.config.headers = headers;
+    this.goBack();
+  }
 }
