@@ -10,15 +10,17 @@ export class WorkbookComponent implements OnInit {
   @Input() endAt: number = 10;
   @Input() openWindows: any;
 
+  tableFormats = ['csv', 'tsv'];
+  workbookFormats = ['xlsx', 'xls'];
+
   activeSheet: any = {};
   constructor() {}
 
   ngOnInit(): void {
     this.activeSheet = this.config.data[0];
+    this.activeSheet.open = true;
+    console.log(this.config);
   }
 
-  makeActive(sheet: any) {
-    this.activeSheet = sheet;
-    this.endAt = 10;
-  }
+  deleteSheet(i: any) {}
 }

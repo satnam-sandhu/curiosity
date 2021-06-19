@@ -20,7 +20,11 @@ export class CoreService {
         else return { type: attemps[key], value };
       };
       let isDate = function (date: any): boolean {
-        if (date.getFullYear() >= yt) return true;
+        if (
+          date.getFullYear() >= yt &&
+          date.getFullYear() <= new Date().getUTCFullYear()
+        )
+          return true;
         return false;
       };
       let attemptConversion = function (value: any): any {

@@ -27,6 +27,7 @@ export class TreeComponent implements OnInit {
     this.http
       .getFile(`${this.root}/${item.name}`)
       .subscribe((res: any): any => {
+        console.log(res);
         if (res.status == 'error') return this._snackBar.open(res.error, 'Ok');
         item.path = `${this.root}/${item.name}`;
         item.config = res;

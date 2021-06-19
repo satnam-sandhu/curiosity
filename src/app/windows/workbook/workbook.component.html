@@ -1,34 +1,52 @@
 <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
-  <li class="nav-item" role="presentation" *ngFor="let sheet of config.data">
+  <li
+    class="nav-item"
+    role="presentation"
+    *ngFor="let sheet of config.data; let i = index"
+  >
     <button
-      [ngClass]="
-        activeSheet.name == sheet.name ? 'nav-link active' : 'nav-link'
-      "
+      [ngClass]="sheet.open ? 'nav-link active' : 'nav-link'"
       id="pills-home-tab"
       [attr.data-bs-toggle]="'pill'"
-      [attr.data-bs-target]="'#' + sheet.name.replace(' ', '-')"
       type="button"
       role="tab"
       aria-controls="pills-home"
       aria-selected="true"
-      (click)="makeActive(sheet)"
+      (click)="sheet.open = true; activeSheet = sheet"
     >
-      {{ sheet.name }}
-    </button>
+      {{ sheet.name }}</button
+    >&nbsp;
+    <i
+      (click)="config.data.splice(i, 1)"
+      class="bi bi-trash hoverable float-end"
+    ></i>
   </li>
 </ul>
+
 <div class="tab-content" id="pills-tabContent">
   <div
-    *ngFor="let sheet of config.data"
     class="tab-pane fade show active"
     role="tabpanel"
     aria-labelledby="pills-home-tab"
   >
-    <span>rows: {{ sheet.data.length }}</span>
+    <span>rows: {{ activeSheet.data.length }}</span>
+
     <app-table
-      *ngIf="activeSheet.name == sheet.name"
-      [config]="sheet"
+      *ngIf="tableFormats.includes(activeSheet.type)"
+      [config]="activeSheet"
+      [endAt]="endAt"
       [openWindows]="openWindows"
     ></app-table>
+
+    <app-settings
+      *ngIf="activeSheet.type == 'settings'"
+      [config]="activeSheet"
+      [openWindows]="openWindows"
+    ></app-settings>
+    <app-charts
+      *ngIf="activeSheet.type == 'charts'"
+      [config]="activeSheet"
+      [openWindows]="openWindows"
+    ></app-charts>
   </div>
 </div>
