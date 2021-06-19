@@ -38,7 +38,7 @@ export class PlaygroundComponent implements OnInit {
   save(item: any) {
     console.log(item);
     this.http
-      .saveFile(item.config.data, item.path, item.config._type)
+      .saveFile(item.config.data, item.path, item.config.type)
       .subscribe((res) => {
         this._snackBar.open(item.path + '  saved', 'Ok');
       });
