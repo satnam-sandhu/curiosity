@@ -3,7 +3,18 @@
     <tr>
       <th>#</th>
       <th *ngFor="let head of config.headers; let i = index">
-        {{ head }}
+        <span
+          class="hoverable"
+          (click)="
+            config.type = 'charts';
+            config.action = {
+              analyzeColumn: head,
+              type: 'manipulate',
+              index: i
+            }
+          "
+          >{{ head }}</span
+        >
         <span>
           <i
             (click)="openSettings({ type: 'addColumn', index: i })"

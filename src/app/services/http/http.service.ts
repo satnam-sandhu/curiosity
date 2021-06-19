@@ -15,4 +15,10 @@ export class HttpService {
   getFile(path: string) {
     return this.http.get(`${this.url.base}/file?path=/${path || ''}`);
   }
+  saveFile(data: any, path: string, type: string) {
+    return this.http.post(
+      `${this.url.base}/save?path=/${path || ''}&type=${type}`,
+      data
+    );
+  }
 }

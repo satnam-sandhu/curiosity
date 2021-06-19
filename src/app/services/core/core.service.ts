@@ -8,7 +8,7 @@ export class CoreService {
 
   year_threshold = 2015;
 
-  analyze(data: any): Promise<any> {
+  analyzeTypes(data: any): Promise<any> {
     console.log(data.length);
     return new Promise((resolve) => {
       let yt = this.year_threshold;
@@ -67,8 +67,6 @@ export class CoreService {
     return new Promise((resolve) => {
       let arr: any = [];
       let transform = function (i: any) {
-        if (i == 1) console.log(config.headers);
-
         try {
           if (i % 100 == 0) console.log(i);
           let ob: any = {};
@@ -87,12 +85,18 @@ export class CoreService {
                       // console.log(i, config.data);
                       value = value + action.params.join('');
                       break;
+                    case 'regex':
+                      // console.log(i, config.data);
+                      value = value
+                        .match(new RegExp(action.params.join(''), 'g'))
+                        .join('');
+                      break;
                   }
                 } catch (err) {
                   console.log(err, i);
                 }
               }
-              ob[config.action.name] = value;
+              ob[config.headers[index]] = value;
             }
           }
           arr.push(ob);
@@ -111,6 +115,40 @@ export class CoreService {
       };
 
       setTimeout(transform.bind(this, 0));
+    });
+  }
+
+  analyze(data: any, meta: any): Promise<any> {
+    console.log(meta);
+    return new Promise((resolve) => {
+      let _processed_data: any = {};
+      let processed_data: any = [];
+      let analyze = function (i: number) {
+        if (i % 100 == 0) console.log(i);
+
+        let row = data[i];
+        if (!_processed_data[row[meta.column]]) {
+          processed_data.push(0);
+          _processed_data[row[meta.column]] = processed_data.length - 1;
+        }
+        switch (meta._function) {
+          case 'count':
+            processed_data[_processed_data[row[meta.column]]]++;
+            break;
+          case 'sum':
+            processed_data[_processed_data[row[meta.column]]] =
+              processed_data[_processed_data[row[meta.column]]] +
+              Number(row[row[meta.column]]);
+            break;
+        }
+        if (i < data.length - 1) setTimeout(() => analyze(++i));
+        else
+          return resolve({
+            data: processed_data,
+            labels: Object.keys(_processed_data),
+          });
+      };
+      setTimeout(() => analyze(0));
     });
   }
 }

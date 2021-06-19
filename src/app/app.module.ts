@@ -20,6 +20,7 @@ import { WorkbookComponent } from './windows/workbook/workbook.component';
 import { SlicePipe } from './pipes/slice/slice.pipe';
 import { DatePipe } from './pipes/date/date.pipe';
 import { SettingsComponent } from './windows/settings/settings.component';
+import { ChartsComponent } from './windows/charts/charts.component';
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import { SettingsComponent } from './windows/settings/settings.component';
     SlicePipe,
     DatePipe,
     SettingsComponent,
+    ChartsComponent,
   ],
   imports: [
     FormsModule,

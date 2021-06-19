@@ -14,6 +14,7 @@ export class TableComponent implements OnInit {
   type: string = '';
   meta: any = {};
   headers: any = [];
+  ctx: string = 'chart';
 
   constructor(private core: CoreService) {}
 
@@ -24,7 +25,7 @@ export class TableComponent implements OnInit {
     this.config.headers = Object.keys(this.config.data[0]);
     this.headers.splice(this.headers.indexOf('_utc_date'), 1);
     if (this.config.meta) return (this.meta = this.config.meta);
-    let { meta } = await this.core.analyze(this.config.data);
+    let { meta } = await this.core.analyzeTypes(this.config.data);
     this.config.isAnalyzed = true;
     this.config.meta = meta;
     console.log('done', meta);

@@ -20,6 +20,12 @@ export class SettingsComponent implements OnInit {
       params: [],
     },
     {
+      type: 'regex',
+      name: 'RegEx',
+      param_headers: ['regex'],
+      params: [],
+    },
+    {
       type: 'constant',
       name: 'Constant Value',
       param_headers: ['Constant Value'],
@@ -48,7 +54,6 @@ export class SettingsComponent implements OnInit {
       this.pending_actions,
       { sample: true }
     );
-    console.log(data, this.config.action);
     this.sample_value = data[0][this.config.action.name];
   }
 

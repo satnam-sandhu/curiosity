@@ -18,7 +18,9 @@
       >&nbsp;&nbsp;
       <span class="terminal">timezone: UTC (+ 0:00)</span>
       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-      <i class="bi bi-pie-chart-fill"></i>
+      <span (click)="item.config.type = 'charts'">
+        <i class="bi bi-pie-chart-fill hoverable"></i>
+      </span>
 
       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
@@ -56,6 +58,11 @@
         [config]="item.config"
         [openWindows]="openWindows"
       ></app-settings>
+      <app-charts
+        *ngIf="item.config.type == 'charts'"
+        [config]="item.config"
+        [openWindows]="openWindows"
+      ></app-charts>
     </div>
   </div>
 </div>
