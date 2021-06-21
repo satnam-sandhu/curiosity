@@ -12,7 +12,7 @@
       role="tab"
       aria-controls="pills-home"
       aria-selected="true"
-      (click)="sheet.open = true; activeSheet = sheet"
+      (click)="changeActiveSheet(sheet)"
     >
       {{ sheet.name }}</button
     >&nbsp;
@@ -29,22 +29,22 @@
     role="tabpanel"
     aria-labelledby="pills-home-tab"
   >
-    <span>rows: {{ activeSheet.data.length }}</span>
+    <span>rows: {{ activeSheet?.data?.length }}</span>
 
     <app-table
-      *ngIf="tableFormats.includes(activeSheet.type)"
+      *ngIf="tableFormats.includes(activeSheet?.type)"
       [config]="activeSheet"
       [endAt]="endAt"
       [openWindows]="openWindows"
     ></app-table>
 
     <app-settings
-      *ngIf="activeSheet.type == 'settings'"
+      *ngIf="activeSheet?.type == 'settings'"
       [config]="activeSheet"
       [openWindows]="openWindows"
     ></app-settings>
     <app-charts
-      *ngIf="activeSheet.type == 'charts'"
+      *ngIf="activeSheet?.type == 'charts'"
       [config]="activeSheet"
       [openWindows]="openWindows"
     ></app-charts>

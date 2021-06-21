@@ -19,12 +19,17 @@ export class TableComponent implements OnInit {
   constructor(private core: CoreService) {}
 
   async ngOnInit() {
+    console.log('done', this.config.headers, Object.keys(this.config.data[0]));
+
     this.type = this.config.type;
     this.config._type = this.config.type;
     this.config.headers = Object.keys(this.config.data[0]);
+
     for (let head of this.config.headers) this.types[head] = 'string';
-    this.headers.push('_utc_date');
+    // this.headers.push('_utc_date');
     // if (this.config.meta) return (this.meta = this.config.meta);
+
+    this.config.headers = Object.keys(this.config.data[0]);
     let { meta } = await this.core.analyzeTypes(this.config.data);
     // let meta = {};
     // for (let head in meta) {
@@ -38,11 +43,13 @@ export class TableComponent implements OnInit {
     //   }
     // }
     this.config.isAnalyzed = true;
+    console.log(this.config.headers);
+    this.config.headers = Object.keys(this.config.data[0]);
+    console.log(this.config.headers);
+
     // let meta = {};
     this.config.meta = meta;
-    console.log('done', meta);
     this.meta = meta;
-    let head = ' ';
   }
 
   openSettings(action: any) {

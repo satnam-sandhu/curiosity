@@ -1,4 +1,5 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import { TableComponent } from '../table/table.component';
 
 @Component({
   selector: 'app-workbook',
@@ -9,6 +10,7 @@ export class WorkbookComponent implements OnInit {
   @Input() config: any;
   @Input() endAt: number = 10;
   @Input() openWindows: any;
+  @ViewChild(TableComponent) table: TableComponent | undefined;
 
   tableFormats = ['csv', 'tsv'];
   workbookFormats = ['xlsx', 'xls'];
@@ -23,4 +25,10 @@ export class WorkbookComponent implements OnInit {
   }
 
   deleteSheet(i: any) {}
+
+  changeActiveSheet(sheet: any) {
+    sheet.open = true;
+    this.activeSheet = sheet;
+    this.table?.ngOnInit();
+  }
 }

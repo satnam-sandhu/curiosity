@@ -15,16 +15,64 @@ export class CoreService {
       let attemps: any = {};
       let analyzeType = function (key: any, value: any): any {
         let type: string = typeof value;
-        if (type !== attemps[key]) return attemptConversion(value);
+        if (!attemps[key]) return attemptConversion(value, key);
+        if (type !== attemps[key]) return attemptDesiredConversion(value, key);
         else return { type: attemps[key], value };
+      };
+      let attemptDesiredConversion = function (
+        value: any,
+
+        key: string
+      ): any {
+        switch (attemps[key]) {
+          case 'number':
+            if (!Number.isNaN(Number(value)) && value !== '')
+              return { type: 'number', value: Number(value) };
+            break;
+          case 'date':
+            let date = new Date(value);
+            if (isDate(date))
+              return {
+                type: 'date',
+                value: new Date(value),
+                extra: `${
+                  date.getUTCMonth() + 1
+                }-${date.getUTCDate()}-${date.getUTCFullYear()}`,
+              };
+            if (isMSDate(value)) {
+              let date = new Date(
+                value * 24 * 60 * 60 * 1000 + new Date('1 Jan 1900').getTime()
+              );
+              return {
+                type: 'date',
+                value: date,
+                extra: `${
+                  date.getUTCMonth() + 1
+                }-${date.getUTCDate()}-${date.getUTCFullYear()}`,
+              };
+            }
+            break;
+          case 'string':
+            return String(value);
+        }
+
+        return attemptConversion(value);
       };
       let isDate = function (date: any): boolean {
         if (date.getFullYear() >= yt && date.getFullYear() <= 2019) return true;
         return false;
       };
-      let attemptConversion = function (value: any): any {
+      let isMSDate = function (value: any): boolean {
+        let date = new Date(
+          value * 24 * 60 * 60 * 1000 + new Date('1 Jan 1900').getTime()
+        );
+        if (date.getFullYear() >= yt && date.getFullYear() <= 2019) return true;
+        return false;
+      };
+      let attemptConversion = function (value: any, key?: any): any {
         let date = new Date(value);
-        if (isDate(date))
+        if (isDate(date)) {
+          if (key) attemps[key] = 'date';
           return {
             type: 'date',
             value: new Date(value),
@@ -32,8 +80,27 @@ export class CoreService {
               date.getUTCMonth() + 1
             }-${date.getUTCDate()}-${date.getUTCFullYear()}`,
           };
-        if (!Number.isNaN(Number(value)) && value !== '')
+        }
+        if (isMSDate(value)) {
+          if (key) attemps[key] = 'date';
+
+          let date = new Date(
+            value * 24 * 60 * 60 * 1000 + new Date('1 Jan 1900').getTime()
+          );
+          return {
+            type: 'date',
+            value: date,
+            extra: `${
+              date.getUTCMonth() + 1
+            }-${date.getUTCDate()}-${date.getUTCFullYear()}`,
+          };
+        }
+        if (!Number.isNaN(Number(value)) && value !== '') {
+          if (key) attemps[key] = 'number';
+
           return { type: 'number', value: Number(value) };
+        }
+        if (key) attemps[key] = 'string';
         return { type: 'string', value };
       };
       let analyze = function (i: number) {
