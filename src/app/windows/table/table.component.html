@@ -38,10 +38,19 @@
         <span *ngFor="let type of meta[head]?.types?.type; let last = last"
           >{{ type }}
           <span *ngIf="meta[head]?.types?.type.length > 1"
-            >({{ meta[head]?.types?.counter[type] }})
+            >({{ meta[head]?.types?.loc[type].join(";") }})
             <span *ngIf="!last">,</span>&nbsp;&nbsp;</span
           ></span
         >
+        <!-- <select
+          class="form-select"
+          [(ngModel)]="types[head]"
+          (change)="convert(head)"
+        >
+          <option [ngValue]="'date'">date</option>
+          <option [ngValue]="'number'">number</option>
+          <option [ngValue]="'string'">string</option>
+        </select> -->
       </td>
     </tr>
   </thead>
